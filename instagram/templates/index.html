@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}首页-{{current_user.username}}{% endblock %}
+<!-- -{{current_user.username}}-->
+{% block css %}/static/styles/pages/index.css{% endblock %}
+{% block js %}
+<script type="text/javascript" src="/static/js/index.js"></script>
+{% endblock%}
+{% block content %}
+<div class="page-main" id="pages">
+    {% for image in images%}
+    <article class="mod">
+        <a class="close" href="javascript:;">X</a>
+        <header class="mod-hd">
+            <time class="data">2020-04-24</time>
+            <a href="/profile/{{image.user.id}}" class="avatar">
+                <img src="{{image.user.head_url}}">
+            </a>
+            <div class="profile-info">
+                <a title="{{image.user.username}}" href="/profile/{{image.user.id}}">{{image.user.username}}</a>
+            </div>
+        </header>
+        <div class="mod-bd">
+            <div class="img-box">
+                <a href="/image/{{image.id}}">
+                    <img src="{{image.url}}">
+                </a>
+            </div>
+        </div>
+        <div class="mod-ft">
+           <div class="info clearfix">
+                <span class="time">14:01</span>
+                <a class="praise" href="javascript:;">赞</a>
+            </div>
+<!--            <div class="praises-total" total="4" style="display: block;">4个人觉得很赞</div>-->
+            <div class="praises-total" total="0" style="display: none;"></div>
+            <ul class="discuss-list">
+                <li class="more-discuss">
+                    <a>
+                        <span>全部 </span><span class="">{{image.comments|length}}</span>
+                        <span> 条评论</span></a>
+                </li>
+                {% for comment in image.comments %}
+                {% if loop.index > 3 %}{% break %}{% endif %}
+                <li>
+                    <a class="_4zhc5 _iqaka" title="zjuyxy" href="/profile/{{comment.user.id}}"
+                       data-reactid=".0.1.0.0.0.2.1.2:$comment-17856951190001917.1">{{comment.user.username}}</a>
+                    <span>
+                        <span>{{comment.content}}</span>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
